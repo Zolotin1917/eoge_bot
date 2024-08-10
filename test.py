@@ -1,33 +1,15 @@
-from tkinter import *
-from tkinter import colorchooser,messagebox
-brush_size = 10
-brush_color = 'black'
-def draw(event):
-    canv.create_oval(event.x - brush_size,
-                          event.y - brush_size,
-                          event.x + brush_size,
-                          event.y + brush_size,
-                          fill=brush_color, outline=brush_color)
-def chooseColor():
-    global brush_color
-    (rgb, hx) = colorchooser.askcolor()
-    brush_color = hx
-def setBrushSize(value):
-    global brush_size
-    brush_size = int(value)
-root = Tk()
-root.geometry("800x600")
+from telegram.ext import Updater, MessageHandler, Filters
 
-root.title("MyPaint")
-root.columnconfigure(6, weight=1)
-root.rowconfigure(2,weight=1)
 
-canv = Canvas(root, bg="white")
+def forward_message(update, context):
+    context.bot.forward_message(
+        chat_id='DESTINATION_CHAT_ID',  # ID чата, куда будет отправлено пересылаемое сообщение
+        from_chat_id=update.message.chat_id,  # ID чата, из которого получено сообщение
+        message_id=update.message.message_id  # ID пересылаемого сообщения
+    )
 
-canv.grid(row=2, column=0, columnspan=7, padx=5, pady=5, sticky=E + W + S + N)
 
-canv.bind("<B1-Motion>", draw)
-Button(root, text = 'Выбор цвета', width=11, command=chooseColor).grid(column=1, row = 0, padx=5)
-v=IntVar(value=brush_size)
-Scale(root, variable=v, from_=1, to=100, orient=HORIZONTAL, command=setBrushSize).grid(row = 0, column=2, padx=5)
-root.mainloop()
+updater = Updater('BOT_TOKEN')
+updater.dispatcher.add_handler(MessageHandler(Filters.text, forward_message))
+updater.start_polling()
+updater.idle()

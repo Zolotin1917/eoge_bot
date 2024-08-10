@@ -1,34 +1,41 @@
-from tkinter import *
+import networkx as nx
+import matplotlib.pyplot as plt
 
-brush_size = 10
-eraser_size = 50
+G = nx.Graph()
 
-root = Tk()
-root.geometry('800x800')
-root.title('paint')
+G.add_node("Singapore")
+G.add_node("San Francisco")
+G.add_node("Tokyo")
 
-def size_changer(val):
-    global brush_size
-    brush_size=int(val)
-def draw(event):
-    canvas.create_oval(event.x - brush_size,
-                       event.y - brush_size,
-                       event.x + brush_size,
-                       event.y + brush_size,
-                       fill='black')
-def eraser(event):
-    canvas.create_oval(event.x - eraser_size,
-                       event.y - eraser_size,
-                       event.x + eraser_size,
-                       event.y + eraser_size,
-                       fill='red')
-canvas = Canvas(root,width=800, height=700,bg='light grey')
-canvas.bind('<B1-Motion>', draw)
-canvas.bind('<B3-Motion>', eraser)
+G.add_nodes_from(["Riga", "Copenhagen"])
 
-brush_slider = Scale(root,from_=1, to=100, orient='horizontal', command=size_changer)
-
-brush_slider.pack()
-canvas.pack()
-
-root.mainloop()
+G.add_edge("Sinagore", "San Francisco")
+G.add_edge("San Francisco", "Tokyo")
+G.add_edges_from([
+    ("Riga", "Copenhagen"),
+    ("Copenhagen", "Singapore"),
+    ("Singapore", "Tokyo"),
+    ("Riga", "San Francisco"),
+    ("San Francisco", "Singapore")
+])
+pos = nx.circular_layout(G)
+print(G)
+nx.draw(G, pos, with_labels=True)
+nx.draw_networkx_edge_labels(
+    G,
+    pos,
+    edge_labels={
+        ("Singapore", "Tokyo"): '2 flights daily',
+        ("San Francisco", "Singapore"): '5 flights daily'
+    },
+    font_color='red')
+options = {
+    'node_color': 'yellow',
+    'node_size': 3500,
+    'width': 1,
+    'arrowstyle': '-|>',
+    'arrowsize': 18,
+    'edge_color': 'blue',
+}
+nx.draw(G, pos, with_labels=True, arrows=True, **options)
+plt.show()

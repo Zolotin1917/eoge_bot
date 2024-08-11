@@ -44,11 +44,12 @@ def button_message(message):
 
 @bot.message_handler()
 def message_reply(message):
+
     a = message.text.lower()
     print( 'a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
     if a == zagadka[2].lower():
-        bot.send_message(message.chat.id,'Верно! Для того, чтобы перейти к следующей загадки напиши /start')
+        bot.send_message(message.chat.id,'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
     else:
         wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
         print(wr)

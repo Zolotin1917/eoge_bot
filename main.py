@@ -19,18 +19,13 @@ Wrong_answer = cursor.fetchall()
 
 
 
-#@bot.message_handler(commands=['button'])
-#def button_message(message):
-
-
-
 for text in Wrong_answer:
     print(text)
 
 
 
 
-@bot.message_handler(commands=['start'], regexp="Новая загадка")
+@bot.message_handler(commands=['start'])
 def start_message(message):
     global zagadka
     zagadka = zagadki[random.randint(0, len(zagadki)) - 1]
@@ -44,7 +39,6 @@ def start_message(message):
 
 @bot.message_handler(regexp="Новая загадка")
 def start_message(message):
-
     zagadka = zagadki[random.randint(0, len(zagadki)) - 1]
     print(zagadka)
     bot.send_message(message.chat.id, zagadka[1])

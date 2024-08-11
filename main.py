@@ -19,6 +19,10 @@ Wrong_answer = cursor.fetchall()
 
 
 
+#@bot.message_handler(commands=['button'])
+#def button_message(message):
+
+
 
 for text in Wrong_answer:
     print(text)
@@ -26,21 +30,32 @@ for text in Wrong_answer:
 
 
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start'], regexp="Новая загадка")
 def start_message(message):
     global zagadka
     zagadka = zagadki[random.randint(0, len(zagadki)) - 1]
     print(zagadka)
     bot.send_message(message.chat.id, zagadka[1])
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("Новая загадка")
+
+    markup.add(btn1)
+    bot.send_message(message.chat.id, text="", reply_markup=markup)
+
+@bot.message_handler(regexp="Новая загадка")
+def start_message(message):
+
+    zagadka = zagadki[random.randint(0, len(zagadki)) - 1]
+    print(zagadka)
+    bot.send_message(message.chat.id, zagadka[1])
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("Новая загадка")
+
+    markup.add(btn1)
+    bot.send_message(message.chat.id, text="", reply_markup=markup)
 
 
 
-@bot.message_handler(commands=['button'])
-def button_message(message):
-    markup=types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1=types.KeyboardButton("Кнопка")
-    markup.add(item1)
-    bot.send_message(message.chat.id,'Выберите что вам надо',reply_markup=markup)
 
 @bot.message_handler()
 def message_reply(message):

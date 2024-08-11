@@ -15,12 +15,12 @@ cursor.execute('SELECT * FROM Zagadki')
 zagadki = cursor.fetchall()
 
 cursor.execute('SELECT text FROM Wrong_answer')
-wrong_answer = cursor.fetchall()
+Wrong_answer = cursor.fetchall()
 
 
 
 
-for text in wrong_answer:
+for text in Wrong_answer:
     print(text)
 
 
@@ -31,7 +31,7 @@ def start_message(message):
     global zagadka
     zagadka = zagadki[random.randint(0, len(zagadki)) - 1]
     print(zagadka)
-    bot.send_message(message.chat.id,zagadka[1])
+    bot.send_message(message.chat.id, zagadka[1])
 
 
 
@@ -48,18 +48,17 @@ def message_reply(message):
     print( 'a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
     if a == zagadka[2].lower():
-        bot.send_message(message.chat.id,'Верно!')
+        bot.send_message(message.chat.id,'Верно! Для того, чтобы перейти к следующей загадки напиши /start')
     else:
+        wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
+        print(wr)
+        bot.send_message(message.chat.id, wr[0])
 
 
-        Wrong_answer = text[random.randint(0, len(Wrong_answer)) - 1]
-        print(text)
-        bot.send_message(message.chat.id, text[2])
-
-    bot.polling(none_stop=True)
 
 bot.infinity_polling()
 connection.close()
+
 
 
 

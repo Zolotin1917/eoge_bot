@@ -60,10 +60,10 @@ def message_reply(message):
     if a == zagadka[2].lower():
         bot.send_message(message.chat.id,'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
     else:
-        if a == Mat[2].lower():
-            mo = Otvetka[random.randint(0, len(Otvetka)) - 1]
-            print('Ответка:', mo)
-            bot.send_message(message.shat.id, mo[0])
+        if a == Mat[1]:
+            otv = Otvetka[random.randint(0, len(Otvetka)) - 1]
+            print(otv)
+            bot.send_message(message.shat.id, otv[0])
         else:
             wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
             print(wr)

@@ -3,7 +3,6 @@ from telebot import types
 import sqlite3
 import random
 
-
 token=('7431473620:AAGhcm3uWIrSlQfBX-OovOvBYE4W2dx23Jw')
 bot=telebot.TeleBot(token)
 conn = sqlite3.connect('zagadki', check_same_thread=False)
@@ -17,22 +16,20 @@ zagadki = cursor.fetchall()
 cursor.execute('SELECT text FROM Wrong_answer')
 Wrong_answer = cursor.fetchall()
 
-cursor.execute('SELECT matnye_slova FROM mat')
-mat = cursor.fetchall()
+cursor.execute('SELECT text FROM Mat')
+Mat = cursor.fetchall()
 
-cursor.execute('SELECT moshnaya_otvetka FROM otvetka')
-otvetka = cursor.fetchall()
-
+cursor.execute('SELECT text FROM Otvetka')
+Otvetka = cursor.fetchall()
 
 for text in Wrong_answer:
     print(text)
 
-for matnye_slova in mat:
-    print(matnye_slova)
+for text in Mat:
+    print(text)
 
-for moshnaya_otvetka in otvetka:
-    print(moshnaya_otvetka)
-
+for text in Otvetka:
+    print(text)
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -42,7 +39,6 @@ def start_message(message):
     bot.send_message(message.chat.id, zagadka[1])
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("Новая загадка")
-
     markup.add(btn1)
     bot.send_message(message.chat.id, text="", reply_markup=markup)
 
@@ -53,43 +49,27 @@ def start_message(message):
     bot.send_message(message.chat.id, zagadka[1])
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("Новая загадка")
-
     markup.add(btn1)
     bot.send_message(message.chat.id, text="", reply_markup=markup)
 
-
-
-
 @bot.message_handler()
 def message_reply(message):
-
     a = message.text.lower()
     print( 'a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
     if a == zagadka[2].lower():
         bot.send_message(message.chat.id,'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
-    elif a == matnye_slova[0].lower():
-        mo = moshnaya_otvetka[random.randint(0, len(moshnaya_otvetka)) - 1]
-        print('Ответка:', mo[0])
-        bot.send_message(message.shat.id, mo[0])
     else:
-        wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
-        print(wr)
-        bot.send_message(message.chat.id, wr[0])
-
-
-
-
-
+        if a == Mat[2].lower():
+            mo = Otvetka[random.randint(0, len(Otvetka)) - 1]
+            print('Ответка:', mo)
+            bot.send_message(message.shat.id, mo[0])
+        else:
+            wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
+            print(wr)
+            bot.send_message(message.chat.id, wr[0])
 
 bot.infinity_polling()
 connection.close()
-
-
-
-
-
-
-
 
 

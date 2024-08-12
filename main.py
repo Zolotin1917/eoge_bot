@@ -17,12 +17,21 @@ zagadki = cursor.fetchall()
 cursor.execute('SELECT text FROM Wrong_answer')
 Wrong_answer = cursor.fetchall()
 
+cursor.execute('SELECT matnye_slova FROM mat')
+mat = cursor.fetchall()
+
+cursor.execute('SELECT moshnaya_otvetka FROM otvetka')
+otvetka = cursor.fetchall()
 
 
 for text in Wrong_answer:
     print(text)
 
+for matnye_slova in mat:
+    print(matnye_slova)
 
+for moshnaya_otvetka in otvetka:
+    print(moshnaya_otvetka)
 
 
 @bot.message_handler(commands=['start'])
@@ -53,16 +62,22 @@ def start_message(message):
 
 @bot.message_handler()
 def message_reply(message):
-
     a = message.text.lower()
     print( 'a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
     if a == zagadka[2].lower():
         bot.send_message(message.chat.id,'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
+    elif a == matnye_slova[1].lower():
+        mo = moshnaya_otvetka[random.randint(0, len(moshnaya_otvetka)) - 1]
+        print(mo)
+        bot.send_message(message.shat.id, mo[1])
     else:
         wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
         print(wr)
         bot.send_message(message.chat.id, wr[0])
+
+
+
 
 
 

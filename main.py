@@ -62,15 +62,16 @@ def start_message(message):
 
 @bot.message_handler()
 def message_reply(message):
+
     a = message.text.lower()
     print( 'a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
     if a == zagadka[2].lower():
         bot.send_message(message.chat.id,'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
-    elif a == matnye_slova[1].lower():
+    elif a == matnye_slova[0].lower():
         mo = moshnaya_otvetka[random.randint(0, len(moshnaya_otvetka)) - 1]
-        print(mo)
-        bot.send_message(message.shat.id, mo[1])
+        print('Ответка:', mo[0])
+        bot.send_message(message.shat.id, mo[0])
     else:
         wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
         print(wr)

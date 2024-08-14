@@ -2,9 +2,10 @@ import telebot
 from telebot import types
 import sqlite3
 import random
+#import time
 
-token=('7431473620:AAGhcm3uWIrSlQfBX-OovOvBYE4W2dx23Jw')
-bot=telebot.TeleBot(token)
+token = ('7431473620:AAGhcm3uWIrSlQfBX-OovOvBYE4W2dx23Jw')
+bot = telebot.TeleBot(token)
 conn = sqlite3.connect('zagadki', check_same_thread=False)
 cursor = conn.cursor()
 
@@ -16,8 +17,8 @@ zagadki = cursor.fetchall()
 cursor.execute('SELECT text FROM Wrong_answer')
 Wrong_answer = cursor.fetchall()
 
-connection = sqlite3.connect('Mat')
-cursor = connection.cursor()
+#connection = sqlite3.connect('Mat')
+#cursor = connection.cursor()
 cursor.execute('SELECT * FROM Mat')
 Mat = cursor.fetchall()
 
@@ -30,7 +31,7 @@ Otvetka = cursor.fetchall()
 #tem = cursor.fetchall()
 
 #for oi in tem:
-  #  print(oi)
+#  print(oi)
 
 for text in Wrong_answer:
     print(text)
@@ -40,6 +41,9 @@ for text in Mat:
 
 for text in Otvetka:
     print(text)
+
+#users = {}
+
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -52,6 +56,7 @@ def start_message(message):
     markup.add(btn1)
     bot.send_message(message.chat.id, text="", reply_markup=markup)
 
+
 @bot.message_handler(regexp="Новая загадка")
 def start_message(message):
     zagadka = zagadki[random.randint(0, len(zagadki)) - 1]
@@ -62,14 +67,16 @@ def start_message(message):
     markup.add(btn1)
     bot.send_message(message.chat.id, text="", reply_markup=markup)
 
-@bot.message_handler()
+
+@bot.message_handler(content_types=['text'])
 def message_reply(message):
     a = message.text.lower()
-    print( 'a= ', a)
+    print('a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
+
     if a == zagadka[2].lower():
-        bot.send_message(message.chat.id,'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
-    if a == Mat:
+        bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
+    elif a == Mat:
         otv = Otvetka[random.randint(0, len(Otvetka)) - 1]
         print(otv)
         bot.send_message(message.chat.id, otv[0])
@@ -78,7 +85,9 @@ def message_reply(message):
         print(wr)
         bot.send_message(message.chat.id, wr[0])
 
+
+
+
+
 bot.infinity_polling()
 connection.close()
-
-

@@ -86,9 +86,9 @@ def message_reply(message):
         for a in Mat:
             if a in Mat:
                 print('Матное слово:', message.text.lower())
-                otv = Otvetka[random.randint(0, len(Otvetka)) - 1]
-                print('Ответка:', otv)
-                bot.send_message(message.chat.id, otv[0])
+                a = Otvetka[random.randint(0, len(Otvetka)) - 1]
+                print('Ответка:', a)
+                bot.send_message(message.chat.id, a[0])
                 break
 
 

@@ -77,18 +77,20 @@ def message_reply(message):
     if a == zagadka[2].lower():
         bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
 
-    else:
+    elif a != zagadka[2].lower():
         wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
         print(wr)
         bot.send_message(message.chat.id, wr[0])
 
-    for a in Mat:
-        if a in Mat:
-            print('Матное слово:', a)
-            otv = Otvetka[random.randint(0, len(Otvetka)) - 1]
-            print('Ответка:', otv)
-            bot.send_message(message.chat.id, otv[0])
-            break
+
+        for a in Mat:
+            if a in Mat:
+                print('Матное слово:', message.text.lower())
+                otv = Otvetka[random.randint(0, len(Otvetka)) - 1]
+                print('Ответка:', otv)
+                bot.send_message(message.chat.id, otv[0])
+                break
+
 
 
 

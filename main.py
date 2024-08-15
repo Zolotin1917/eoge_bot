@@ -73,7 +73,7 @@ def message_reply(message):
     a = message.text.lower()
     print('a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
-    print('Матное слово:', Mat)
+    print('Матные слова:', Mat)
     if a == zagadka[2].lower():
         bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
 

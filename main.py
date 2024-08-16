@@ -67,13 +67,23 @@ def start_message(message):
     markup.add(btn1)
     bot.send_message(message.chat.id, text="", reply_markup=markup)
 
+#@bot.message_handler(regexp="Связь/Поддержка")
+#def start_message(message):
+#    bot.send_message(message.chat.id, 'Связь, Поддержка и другое: @Zolotin_1917')
+#    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+#    btn1 = types.KeyboardButton("Связь/Поддержка")
+#    markup.add(btn1)
+#    bot.send_message(message.chat.id, text="", reply_markup=markup)
+
 
 @bot.message_handler()
 def message_reply(message):
+    #lst = [Mat]
     a = message.text.lower()
     print('a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
     print('Матные слова:', Mat)
+    print('Ответки:', Otvetka)
     if a == zagadka[2].lower():
         bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
 
@@ -85,6 +95,7 @@ def message_reply(message):
 
         for a in Mat:
             if a in Mat:
+
                 print('Матное слово:', message.text.lower())
                 a = Otvetka[random.randint(0, len(Otvetka)) - 1]
                 print('Ответка:', a)

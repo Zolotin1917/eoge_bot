@@ -78,29 +78,31 @@ def start_message(message):
 
 @bot.message_handler()
 def message_reply(message):
-    #lst = [Mat]
+
     a = message.text.lower()
+    #lst = [a]
     print('a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
     print('Матные слова:', Mat)
     print('Ответки:', Otvetka)
-    if a == zagadka[2].lower():
-        bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
 
-    elif a != zagadka[2].lower():
+    #if a == zagadka[2].lower():
+    #    bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
+    if a in Mat:
+        print(a)
+        print('Матное слово:', message.text.lower())
+        a = Otvetka[random.randint(0, len(Otvetka)) - 1]
+        print('Ответка:', a)
+        bot.send_message(message.chat.id, a[0])
+    else:
+        print(a)
         wr = Wrong_answer[random.randint(0, len(Wrong_answer)) - 1]
         print(wr)
         bot.send_message(message.chat.id, wr[0])
 
 
-        for a in Mat:
-            if a in Mat:
 
-                print('Матное слово:', message.text.lower())
-                a = Otvetka[random.randint(0, len(Otvetka)) - 1]
-                print('Ответка:', a)
-                bot.send_message(message.chat.id, a[0])
-                break
+
 
 
 

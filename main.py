@@ -4,7 +4,7 @@ import sqlite3
 import random
 #import time
 
-token = ('7431473620:AAGhcm3uWIrSlQfBX-OovOvBYE4W2dx23Jw')
+token = ('7431473620:AAF-YdmseUwhtN3jos7RUX6ppqn-XvgJUlg')
 bot = telebot.TeleBot(token)
 conn = sqlite3.connect('zagadki', check_same_thread=False)
 cursor = conn.cursor()
@@ -83,13 +83,13 @@ def message_reply(message):
     #lst = [a]
     print('a= ', a)
     print('Ответ из бд:', zagadka[2].lower())
-    print('Матные слова:', Mat)
+    print('Матные слова:', len(Mat))
     print('Ответки:', Otvetka)
 
     #if a == zagadka[2].lower():
     #    bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
-    if a in Mat:
-        print(a)
+    if a in list(Mat):
+        print(len(a))
         print('Матное слово:', message.text.lower())
         a = Otvetka[random.randint(0, len(Otvetka)) - 1]
         print('Ответка:', a)

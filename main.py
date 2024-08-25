@@ -86,9 +86,9 @@ def message_reply(message):
     print('Матные слова:', len(Mat))
     print('Ответки:', Otvetka)
 
-    #if a == zagadka[2].lower():
-    #    bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
-    if a in list(Mat):
+    if a == zagadka[2].lower():
+        bot.send_message(message.chat.id, 'Верно! Для того, чтобы перейти к следующей загадке напиши /start')
+    elif a in list(Mat):
         print(len(a))
         print('Матное слово:', message.text.lower())
         a = Otvetka[random.randint(0, len(Otvetka)) - 1]

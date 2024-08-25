@@ -69,7 +69,7 @@ def start_message(message):
 
 #@bot.message_handler(regexp="Связь/Поддержка")
 #def start_message(message):
-#    bot.send_message(message.chat.id, 'Связь, Поддержка и другое: @Zolotin_1917')
+#    bot.send_message(message.chat.id, 'Связь, Поддержка и другое: @Zolotin1917')
 #    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 #    btn1 = types.KeyboardButton("Связь/Поддержка")
 #    markup.add(btn1)
